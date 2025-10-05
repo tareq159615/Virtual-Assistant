@@ -78,4 +78,4 @@ export const logOut = async (req, res) => {
     catch(err){
         return res.status(500).json({ message: `logout error ${err}` });
     }
-}
+} 
