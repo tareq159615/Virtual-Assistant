@@ -41,7 +41,7 @@ Important:
 -   Use ${userName} if someone asks you “Who created you?”
 -   Only respond with the JSON object, nothing else.
 -   If the user speaks in a language other than English (e.g., Bengali), respond in that language.
--   When the user asks to open a website from the provided list, use the 'open-url' type and provide the correct URL. Here is the list of websites:
+-   When the user asks to open a website, use the 'open-url' type. You must identify the correct website and provide its URL from the list below. If the requested website is not on this list, you can perform a Google search for it.
     -   Facebook: https://www.facebook.com
     -   Instagram: https://www.instagram.com
     -   Twitter or X: https://twitter.com
@@ -69,10 +69,26 @@ Important:
       }
     );
 
-    return result.data.candidates[0].content.parts[0].text;
+    // Ensure the response is a valid JSON object before returning
+    const responseText = result.data.candidates[0].content.parts[0].text;
+    try {
+      // Attempt to parse the response to validate it's a JSON
+      JSON.parse(responseText.replace(/```json/g, '').replace(/```/g, ''));
+      return responseText;
+    } catch (e) {
+      console.log("Gemini API returned invalid JSON:", responseText);
+      throw new Error("Failed to get a valid JSON response from Gemini API");
+    }
+
   } catch (error) {
     console.log("Gemini API Error:", error.response?.data || error.message);
-    throw new Error("Failed to get response from Gemini API");
+    // You can return a fallback JSON object here to avoid crashing your application
+    return JSON.stringify({
+      "type": "general",
+      "userInput": command,
+      "response": " দুঃখিত, আমি আপনার অনুরোধটি প্রক্রিয়া করতে পারিনি। অনুগ্রহ করে আবার চেষ্টা করুন।",
+      "url": ""
+    });
   }
 };
 
