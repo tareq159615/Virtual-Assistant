@@ -6,7 +6,7 @@ import { useEffect } from "react";
 export const userDataContext = createContext();
 
 function UserContext({ children }) {
-  const serverUrl = "https://virtual-assistant-backend-crms.onrender.com";
+  const serverUrl = "https://virtual-assistant-backend-1ifl.onrender.com";
   const [frontendImage, setFrontendImage] = useState(null);
   const [backendImage, setBackendImage] = useState(null);
   const [loading, setLoading] = useState(true);
