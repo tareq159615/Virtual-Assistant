@@ -69,26 +69,10 @@ Important:
       }
     );
 
-    // Ensure the response is a valid JSON object before returning
-    const responseText = result.data.candidates[0].content.parts[0].text;
-    try {
-      // Attempt to parse the response to validate it's a JSON
-      JSON.parse(responseText.replace(/```json/g, '').replace(/```/g, ''));
-      return responseText;
-    } catch (e) {
-      console.log("Gemini API returned invalid JSON:", responseText);
-      throw new Error("Failed to get a valid JSON response from Gemini API");
-    }
-
+    return result.data.candidates[0].content.parts[0].text;
   } catch (error) {
     console.log("Gemini API Error:", error.response?.data || error.message);
-    // You can return a fallback JSON object here to avoid crashing your application
-    return JSON.stringify({
-      "type": "general",
-      "userInput": command,
-      "response": " দুঃখিত, আমি আপনার অনুরোধটি প্রক্রিয়া করতে পারিনি। অনুগ্রহ করে আবার চেষ্টা করুন।",
-      "url": ""
-    });
+    throw new Error("Failed to get response from Gemini API");
   }
 };
 
