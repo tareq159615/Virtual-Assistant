@@ -192,7 +192,7 @@ function Home() {
       const greeting = new SpeechSynthesisUtterance(
         `Hello ${userData.name}, what can I help you with?`
       );
-      greeting.lang = "hi-BN";
+      greeting.lang = "bn-Bang";
       greeting.onend = () => {
         startTimeout(); // start listening after speech
       };

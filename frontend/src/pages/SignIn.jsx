@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import bg from "../assets/authBg.png";
 import { IoEye, IoEyeOff } from "react-icons/io5";
